@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**Represent the different ranks a card can be. 
  * Since it is enum, the card rank cannot be changed. 
  */
@@ -155,11 +153,5 @@ class Card implements Comparable<Card>{
 
         return result;
         // Increment all compareTo since if they are equal than 0 will be returned
-    }
-}
-
-public class Assignment {
-    public static void main(String[] args) {
-        CardTest.test1();
     }
 }
