@@ -105,6 +105,7 @@ class Card implements Comparable<Card>{
      * if the objects are not the same type than they cannot be equal. 
      * If they are the same type, than the passed object is casted to be the Card type so that card methods can be used. 
      * Card names, card IDs, and card ranks must be equal for the two cards to be equal. 
+     * Comparison done with equal operator (==) and compareTo() method. 
      * @return (boolean): whether the cards are equal
      */
     public boolean equals(Object object) { 
@@ -114,7 +115,9 @@ class Card implements Comparable<Card>{
 
         Card other = (Card)object; // Object passed is casted and assigned to a variable so that Card methods can be called
 
-        if ((this.cardId == other.cardId) && (this.cardName == other.cardName) && (this.cardRank == other.cardRank)) { // Same ID, name and rank
+        if ((this.cardId == other.cardId) && (this.cardName == other.cardName) && (this.cardRank == other.cardRank)) { // Same ID, name and rank using comparison operator
+            return true;
+        } else if ((Long.valueOf(this.cardId).compareTo(Long.valueOf(other.cardId)) == 0) && (this.cardName.compareTo(other.cardName) == 0) && (this.cardRank.compareTo(other.cardRank) == 0)){ // Same ID, name, and rank using compareTo() method
             return true;
         } else {
             return false;
@@ -145,10 +148,11 @@ class Card implements Comparable<Card>{
      */
     public int compareTo(Card object) {
         Long thisID = Long.valueOf(cardId); // Assign primitive long to wrapper type Long
-        int result = thisID.compareTo(cardId); // Compare ID from this object to the object passed
-        if (result == 0) { // If the two IDs are equal
-            return (this.cardName.compareTo(object.cardName));
-        }
+        
+        int result = thisID.compareTo(object.cardId); // Compare ID from this object to the object passed
+        result = result + this.cardName.compareTo(object.cardName); // Increment with card name comparison
+        result = result + this.cardRank.compareTo(object.cardRank); // Increment with card name comparison
+
         return result;
         // Increment all compareTo since if they are equal than 0 will be returned
     }
@@ -167,7 +171,6 @@ public class Assignment {
         System.out.println("c0 equal to c2: " + c0.equals(c2)); // True
         System.out.println("c0 equal to c1: " + c0.equals(c1)); // False
         System.out.println("c0 equal to c1: " + c0.equals(c3)); // True
-
 
     }
 
