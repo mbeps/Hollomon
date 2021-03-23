@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 class CardTest {
 	public static void simpleTest() { //* Passed
@@ -33,8 +34,25 @@ class CardTest {
 		System.out.println("Size: " + s.size()); // Size 2 because 2 cards are the same
 	}
 
+	public static void treeSetTest() { //* Passed
+		Card c0 = new Card(1, "card1", Rank.COMMON); // same as c2
+		c0.setCardPrice(2);
+		Card c1 = new Card(2, "card2", Rank.COMMON);
+		c1.setCardPrice(2);
+		Card c2 = new Card(1, "card1", Rank.COMMON); // same as c0
+		c0.setCardPrice(6);
+		
+		TreeSet<Card> t = new TreeSet<Card>();
+		t.add(c0);
+		t.add(c1);
+		t.add(c2);
+		System.out.println(t.size());;
+		System.out.println(t);;
+	}
+
 	public static void main(String[] args) {
 		// simpleTest();
-		hashSetTest();
+		// hashSetTest();
+		treeSetTest();
 	}
 }
