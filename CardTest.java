@@ -49,8 +49,15 @@ class CardTest {
 	}
 
 	public static void main(String[] args) {
-		// simpleTest();
-		// hashSetTest();
+		System.out.println("SIMPLE TEST");
+		simpleTest();
+		System.out.println();
+
+		System.out.println("HASH SET TEST");
+		hashSetTest();
+		System.out.println();
+
+		System.out.println("TREE SET TEST");
 		treeSetTest();
 	}
 }

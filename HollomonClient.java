@@ -2,6 +2,11 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+/**Handles connection with the server. 
+ * Socket used to connect to the server. 
+ * After passing username and password login is complete. 
+ * Card objects can then be retrieved from server. 
+ */
 public class HollomonClient {
 	private CardInputStream in;
 	private BufferedWriter out;
@@ -22,7 +27,7 @@ public class HollomonClient {
 			in = new CardInputStream(socket.getInputStream());
 			out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) { //* UnknownHostException already handled
-
+			System.out.println("Failure");
 		}   
 	}
 
@@ -48,7 +53,7 @@ public class HollomonClient {
 	 * @param username (string): username in lowercase to log into server
 	 * @param password (Strong): password to log into server
 	 * @return (List<Card>): the list of cards from the server
-	 * @see #CardInputStream.
+	 * @see {@link #CardInputStream.readCard()}: read card from server and create equivalent new card
 	 */
 	public List<Card> login(String username, String password) {
 		try {
@@ -68,7 +73,7 @@ public class HollomonClient {
 					while ((card = in.readCard()) != null) { // While server reading is not null
 						cardList.add(card); // Cards from server added to array
 					}
-					Collections.sort(cardList);
+					Collections.sort(cardList); // Sorts the unsorted array as items were not added in order
 					return cardList; // Method terminates here therefore null not returned
 				}
 			}	
