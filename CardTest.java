@@ -1,6 +1,4 @@
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 class CardTest {
 	public static void simpleTest() { //* Passed
@@ -46,7 +44,7 @@ class CardTest {
 		t.add(c0);
 		t.add(c1);
 		t.add(c2);
-		System.out.println(t.size());;
+		System.out.println("Size: " + t.size());;
 		System.out.println(t);;
 	}
 

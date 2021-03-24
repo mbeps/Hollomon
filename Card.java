@@ -94,7 +94,8 @@ class Card implements Comparable<Card>{
 	 * @return (string): string representation of card
 	 */
 	public String toString() {
-		return ("Card ID: " + this.cardId + "\nCard Name: " + this.cardName + "\nCard Rank: " + this.cardRank + "\nCard Price: £" + this.cardPrice);
+		return ("\nCard ID: " + this.cardId + " Card Name: " + this.cardName + " Card Rank: " + this.cardRank + " Card Price: £" + this.cardPrice);
+		// return ("Card ID: " + this.cardId + "\nCard Name: " + this.cardName + "\nCard Rank: " + this.cardRank + "\nCard Price: £" + this.cardPrice);
 	}
 
 	@Override 
