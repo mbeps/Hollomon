@@ -23,9 +23,9 @@ public class HollomonClient {
 	 */
 	public HollomonClient(String server, int port) {
 		try {
-			socket = new Socket(server, port);
-			in = new CardInputStream(socket.getInputStream());
-			out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			this.socket = new Socket(server, port);
+			this.in = new CardInputStream(socket.getInputStream());
+			this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) { //* UnknownHostException already handled
 			System.out.println("Failure");
 		}   
@@ -93,5 +93,106 @@ public class HollomonClient {
 		socket.close();
 		in.close();
 		out.close();
+	}
+
+	public long getCredits() {
+		long credit = 0;
+
+		try {
+			this.out.write("CREDIT");
+			this.out.write("\r\n");
+			this.out.flush();
+
+			credit = Long.parseLong(this.in.readResponse());
+			this.in.readResponse();
+		} catch (IOException e) {
+			System.out.println("IOException");
+		}
+		return credit;
+	}
+
+	public List<Card> getCards() {
+		List<Card> cardsList = null;
+		
+		try {
+			this.out.write("CARDS");
+			this.out.write("\r\n");
+			this.out.flush();
+
+			cardsList = new ArrayList<Card>();
+			Card card;
+			while ((card = this.in.readCard()) != null) {
+				cardsList.add(card);
+			}
+
+			Collections.sort(cardsList);
+		} catch (IOException e) {
+			System.out.println("IOException");
+		}
+
+		return cardsList;
+	}
+
+	public List<Card> getOffers() { //£ Repetitive code
+		List<Card> cardsList = null;
+		
+		try {
+			this.out.write("OFFERS");
+			this.out.write("\r\n");
+			this.out.flush();
+
+			cardsList = new ArrayList<Card>();
+			Card card;
+			while ((card = this.in.readCard()) != null) {
+				cardsList.add(card);
+			}
+
+			Collections.sort(cardsList);
+		} catch (IOException e) {
+			System.out.println("IOException");
+		}
+
+		return cardsList;
+	}
+
+	//^ Buying & Selling: 
+	//£ Factorize code
+	public boolean buyCard(Card card) {
+		Long currentCredit = getCredits();
+		boolean sold = false;
+
+		if (currentCredit >= card.getCardPrice()) {
+			try {
+				this.out.write("BUY " + card.getCardId());
+				this.out.write("\r\n");
+				this.out.flush();
+
+				if (this.in.readResponse().contains("OK")) {
+					sold = true;
+				}
+			} catch (IOException e) {
+				System.out.println("ERROR: Card Could not be bought\nIOException");
+			}
+		}
+	
+		return sold;
+	}
+
+	public boolean sellCard(Card card, long price) {
+		boolean bought = false;
+
+		try {
+			this.out.write("SELL " + card.getCardId() + " " + card.getCardPrice());
+			this.out.write("\r\n");
+			this.out.flush();
+
+			if (this.in.readResponse().contains("OK")) {
+				bought = true;
+			}
+		} catch (IOException e) {
+			System.out.println("IOException");
+		}
+	
+		return bought;
 	}
 }

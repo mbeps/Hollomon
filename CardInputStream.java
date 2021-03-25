@@ -11,13 +11,13 @@ public class CardInputStream extends InputStream{
 	 * @param input (InputStream): initiates instance of buffered reader from input stream
 	 * @throws IOException
 	 */
-	public CardInputStream(InputStream input) {
-		try {
-			cardInputStream = new BufferedReader(new InputStreamReader(input));
-			cardInputStream.mark(1000);
-		} catch (IOException e) {
-			System.out.println("Error");
-		}  
+	public CardInputStream(InputStream input) throws IOException {
+		// try {
+		cardInputStream = new BufferedReader(new InputStreamReader(input));
+			// cardInputStream.mark(1000);
+		// } catch (IOException e) {
+		// 	System.out.println("Error");
+		// }  
 	}
    
 	/**Reads card and creates an equivalent card. 
